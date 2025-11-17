@@ -9,13 +9,74 @@ import granat from './granatowy.png'
 import czerwony from './czerwony.png'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(1);
+  const [lak, setLak] = useState(1);
+  const [chek1, setChek1] = useState(false);
+  const [chek2, setChek2] = useState(false);
+  const [chek3, setChek3] = useState(false);
 
+  function onChek1Change(event){
+    setChek1(event.target.checked);
+    cena();
+  }
+  function onChek2Change(event){
+    setChek2(event.target.checked);
+    cena();
+  }
+  function onChek3Change(event){
+    setChek3(event.target.checked);
+    cena();
+  }
+
+
+
+  const [price, setPrice] = useState(75000);
+
+  function setKol(value){
+    setCount(value);
+    cena();
+  }
+  const handleChange = (event) => {
+    setLak(event.target.value);
+    cena()
+  };
+
+
+  function cena(){
+
+    setPrice(75000);
+    
+      if(count!=1){
+      setPrice(price+9000);
+      }
+      
+      if(lak!=1){
+        setPrice(price+7500);
+      }
+
+      if(chek1==true){
+        setPrice(price+6500);
+      }
+
+      if(chek2==true){
+        setPrice(price+8500);
+      }
+
+      if(chek3==true){
+        setPrice(price+5000);
+      
+    }
+    
+  
+  }
+ 
+  
   return (
     <div id="container">
       <div>
-        <img src={szary}></img>
-      </div>
+        <img   src={count==1?szary:(count==2?czerwony:(count==3?zielony:(count==4?zolty:(count==5?granat:szary))))}></img>
+
+              </div>
       <div className='nag'>
         <h1>Konfigurator wyposażenia</h1>
       </div>
@@ -23,12 +84,12 @@ function App() {
         <p>Wybierz kolor lakieru</p>
       </div>
       <div id="seldiv">
-        <select>
-          <option>szary</option>
-          <option>czerwony</option>
-          <option>zielony</option>
-          <option>żółty</option>
-          <option>granatowy</option>
+        <select name='kol' value={count} onChange={e=>setKol(e.target.value)}>
+          <option value={1}>szary</option>
+          <option value={2}>czerwony</option>
+          <option value={3}>zielony</option>
+          <option value={4}>żółty</option>
+          <option value={5}>granatowy</option>
         </select>
         <hr></hr>
       </div>
@@ -36,8 +97,8 @@ function App() {
         <p>Felgi</p>
       </div>
       <div>
-          <input type='radio'  radioGroup='aa' name='aaa'></input>Stalowe
-          <input type='radio' radioGroup='aa' name='aaa'></input>Aluminiowe
+          <input type='radio' name='aaa' value="1" onChange={handleChange} ></input>Stalowe
+          <input type='radio' name='aaa' value="2" onChange={handleChange} ></input>Aluminiowe
         <hr></hr>
       
       </div>
@@ -45,35 +106,24 @@ function App() {
         <p>Wybierz dodatkowe wyposażenie</p>
       </div>
       <div>
-        <input type='checkbox'></input>Czujniki parkowania<br></br>
-        <input type='checkbox'></input>Climatronic<br></br>
-        <input type='checkbox'></input>Nawigacja
+        <input type='checkbox' onChange={onChek1Change}></input>Czujniki parkowania<br></br>
+        <input type='checkbox' onChange={onChek2Change}></input>Climatronic<br></br>
+        <input type='checkbox' onChange={onChek3Change}></input>Nawigacja
         <hr></hr>
 
       </div>
       <div className='tag'>
         <p>Wycena</p>
+        <p>Cena bazowa: 75000 PLN</p>
+        {count!=1?<p>Lakier: 9000 PLN</p>:""}
+        {lak==2?<p>Aluminiowe felgi: 7500 PLN</p>:""}
+        {chek1==true?<p>Czujniki parkowania: 6500</p>:""}
+        {chek2==true?<p>Climatronic: 8500</p>:""}
+        {chek3==true?<p>Nawigacja: 5000</p>:""}
+        <br></br>
+        <p>Razem: {price}</p>
       </div>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
+
     </div>
   )
 }
