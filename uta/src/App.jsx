@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -28,12 +30,16 @@ function App() {
     cena();
   }
 
+  useEffect(() => {
+  cena();
+}, [count, lak, chek1, chek2, chek3]);
 
 
   const [price, setPrice] = useState(75000);
 
   function setKol(value){
-    setCount(value);
+    setCount(Number(value));
+
     cena();
   }
   const handleChange = (event) => {
@@ -43,31 +49,31 @@ function App() {
 
 
   function cena(){
-
-    setPrice(75000);
+    let aaa =75000;
     
-      if(count!=1){
-      setPrice(price+9000);
-      }
-      
-      if(lak!=1){
-        setPrice(price+7500);
-      }
-
-      if(chek1==true){
-        setPrice(price+6500);
-      }
-
-      if(chek2==true){
-        setPrice(price+8500);
-      }
-
-      if(chek3==true){
-        setPrice(price+5000);
-      
-    }
     
-  
+      if(count!==1){
+      aaa+=9000;
+      }
+      console.log(count);
+      
+      if(lak==="2"){
+        aaa+=7500;
+        
+      }
+
+      if(chek1===true){
+        aaa+=6500;
+      }
+
+      if(chek2===true){
+        aaa+=8500;
+      }
+
+      if(chek3===true){
+        aaa+=5000;
+      }
+      setPrice(aaa);
   }
  
   
@@ -97,8 +103,8 @@ function App() {
         <p>Felgi</p>
       </div>
       <div>
-          <input type='radio' name='aaa' value="1" onChange={handleChange} ></input>Stalowe
-          <input type='radio' name='aaa' value="2" onChange={handleChange} ></input>Aluminiowe
+          <input type='radio' name='aaa' value="1" checked={lak==="1"} onChange={handleChange} ></input>Stalowe
+          <input type='radio' name='aaa' value="2" checked={lak==="2"} onChange={handleChange} ></input>Aluminiowe
         <hr></hr>
       
       </div>
